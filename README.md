@@ -12,7 +12,7 @@ Monitor.init(MonitorOptions.builder()
     .apiKey(System.getenv("LOGGIFY_KEY"))
     .service("orders-api")
     .environment("production")
-    .endpoint(System.getenv().getOrDefault("LOGGIFY_ENDPOINT", "http://localhost:3001"))
+    .endpoint(System.getenv().getOrDefault("LOGGIFY_ENDPOINT", "https://ingest.loggify.cloud"))
     .build());
 ```
 
@@ -34,7 +34,7 @@ Register `LoggifyServletFilter` on `/*`. Spring Boot 3 apps can set properties i
 loggify.api-key=${LOGGIFY_KEY}
 loggify.service=orders-api
 loggify.environment=production
-loggify.endpoint=http://localhost:3001
+loggify.endpoint=https://ingest.loggify.cloud
 ```
 
 `LoggifyAutoConfiguration` registers the filter and a Spring interceptor so spans use controller patterns:

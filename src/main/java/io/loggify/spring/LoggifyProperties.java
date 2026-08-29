@@ -7,7 +7,7 @@ public class LoggifyProperties {
   private String apiKey;
   private String service;
   private String environment = "production";
-  private String endpoint = "http://localhost:3001";
+  private String endpoint = "https://ingest.loggify.cloud";
 
   public String getApiKey() {
     return apiKey;

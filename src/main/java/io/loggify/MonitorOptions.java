@@ -20,7 +20,7 @@ public final class MonitorOptions {
     this.apiKey = Objects.requireNonNull(builder.apiKey, "apiKey");
     this.service = Objects.requireNonNull(builder.service, "service");
     this.environment = Objects.requireNonNull(builder.environment, "environment");
-    this.endpoint = builder.endpoint == null ? "http://localhost:3001" : builder.endpoint;
+    this.endpoint = builder.endpoint == null ? "https://ingest.loggify.cloud" : builder.endpoint;
     this.sampleRate = builder.sampleRate;
     this.flushIntervalMs = builder.flushIntervalMs;
     this.maxBuffer = builder.maxBuffer;
