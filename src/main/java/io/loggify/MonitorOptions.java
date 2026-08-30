@@ -14,6 +14,7 @@ public final class MonitorOptions {
   public final int maxBuffer;
   public final long timeoutMs;
   public final boolean captureJul;
+  public final String hostname;
   final HttpClient httpClient;
 
   private MonitorOptions(Builder builder) {
@@ -26,6 +27,7 @@ public final class MonitorOptions {
     this.maxBuffer = builder.maxBuffer;
     this.timeoutMs = builder.timeoutMs;
     this.captureJul = builder.captureJul;
+    this.hostname = builder.hostname;
     this.httpClient = builder.httpClient;
   }
 
@@ -43,6 +45,7 @@ public final class MonitorOptions {
     private int maxBuffer = 500;
     private long timeoutMs = 1500;
     private boolean captureJul = true;
+    private String hostname;
     private HttpClient httpClient;
 
     public Builder apiKey(String apiKey) {
@@ -88,6 +91,12 @@ public final class MonitorOptions {
     /** Capture java.util.logging as Loggify logs. Default true. */
     public Builder captureJul(boolean captureJul) {
       this.captureJul = captureJul;
+      return this;
+    }
+
+    /** Hostname attached to runtime metrics. Defaults to HOSTNAME or the local host name. */
+    public Builder hostname(String hostname) {
+      this.hostname = hostname;
       return this;
     }
 

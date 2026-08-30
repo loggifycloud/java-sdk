@@ -7,6 +7,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.OperatingSystemMXBean;
 import java.lang.management.RuntimeMXBean;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -432,7 +433,30 @@ public final class Monitor {
     Map<String, Object> event = new LinkedHashMap<>();
     event.put("metricName", name);
     event.put("value", value);
+    if (opts != null) {
+      event.put("serviceName", opts.service);
+      event.put("environment", opts.environment);
+    }
+    Map<String, String> tags = new LinkedHashMap<>();
+    String host = resolveHostname();
+    if (!host.isEmpty()) tags.put("hostname", host);
+    tags.put("pid", String.valueOf(ProcessHandle.current().pid()));
+    event.put("tags", tags);
     return event;
+  }
+
+  private static String resolveHostname() {
+    if (opts != null && opts.hostname != null && !opts.hostname.isBlank()) {
+      return opts.hostname.trim();
+    }
+    String env = System.getenv("HOSTNAME");
+    if (env != null && !env.isBlank()) return env.trim();
+    try {
+      String host = InetAddress.getLocalHost().getHostName();
+      return host == null ? "" : host.trim();
+    } catch (Exception ignored) {
+      return "";
+    }
   }
 
   private static double bytesToMb(long bytes) {
