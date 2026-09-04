@@ -453,10 +453,11 @@ public final class Monitor {
     if (env != null && !env.isBlank()) return env.trim();
     try {
       String host = InetAddress.getLocalHost().getHostName();
-      return host == null ? "" : host.trim();
+      if (host != null && !host.isBlank()) return host.trim();
     } catch (Exception ignored) {
-      return "";
+      /* fall through */
     }
+    return "localhost";
   }
 
   private static double bytesToMb(long bytes) {
